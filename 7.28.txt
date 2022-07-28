@@ -1,0 +1,24 @@
+Address.objects.filter(name='홍길동').values() --filter()
+--where NAME='홍길동'
+
+-- and --
+filter(name='홍길동', addr='서울시')	
+--where NAME='홍길동' and ADDR='서울시'
+
+-- or --
+Address.objects.filter(name='홍길동').values() | Address.objects.filter(addr='서울시').values()
+-- where NAME='홍길동' or ADDR='서울시'  
+
+-- filter(Q~ | Q~) 짧은 or조건문 --
+from django.db.models import Q
+Address.objects.filter(Q(name='홍길동') | Q(addr='서울시')).values()
+
+-- FIELD LOOKUP (like문) --
+Address.objects.filter(name__startswith='이')
+
+
+-- order by 문 --
+Address.objects.all().order_by('name').values() --asc
+Address.objects.all().order_by('-name').values() --desc
+Address.objects.all().order_by('-name', 'id', '-addr').values() --여러번의 ORDER BY
+
