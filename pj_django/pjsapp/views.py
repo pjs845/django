@@ -1,15 +1,33 @@
+from re import template
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.template import loader
 from .models import Address
 from .models import BOARD
+from .models import MEMBER
 
 # Create your views here.
 #def index(request):
 #    return HttpResponse("<center><h3>안녕 장고</h3></center>")
-def index(request):
+
+def index(request): 
     template = loader.get_template('index.html')
-    return HttpResponse(template.render())
+    user_id = request.session.get('login_ok_user')
+    print("user_id:", user_id)
+    if user_id:
+        context = {'id':True}
+        print('1')
+        return HttpResponse(template.render(context, request))
+    else:
+        context = {'id':False}
+        print('2')
+        return HttpResponse(template.render(context, request))
+
+'''
+def index(request): #선생님코드
+    template = loader.get_template('index.html')
+    return HttpResponse(template.render({}, request))
+'''
 
 from django.db.models import Q
 import datetime
@@ -186,3 +204,96 @@ def b_delete(request, id):
     board = BOARD.objects.get(id=id)
     board.delete()
     return HttpResponseRedirect(reverse('b_list3'))
+
+
+def login(request):
+    template = loader.get_template('login.html')
+    return HttpResponse(template.render({}, request))
+
+def login_ok(request):
+    template = loader.get_template('login_ok.html')
+    if request.method == "POST":
+        useremail = request.POST['email']
+        userpwd = request.POST['pwd']
+        
+        try:
+            user = MEMBER.objects.get(email=useremail)
+            if user.email == useremail:
+                if user.pwd == userpwd:
+                    request.session['login_ok_user'] = user.id
+                    result = 2
+                    context = {
+                        'result': result,
+                    }
+                    return HttpResponse(template.render(context, request))
+                else:
+                    result = 1
+                    context = {
+                        'result' : result,
+                    }
+                    return HttpResponse(template.render(context, request))                             
+        except:
+            result = 0
+            context = {
+                    'result' : result,
+            }
+            return HttpResponse(template.render(context, request))
+
+def logout(request):
+    if request.session.get('login_ok_user'):
+        del(request.session['login_ok_user'])
+    return HttpResponseRedirect(reverse('index'))
+
+'''
+def login(request): #선생님 코드
+    #template = loader.get_template('login.html') #방법1
+    #return HttpResponse(template.render({}, request))
+    return render(request, 'login.html') #방법2
+
+from .models import MEMBER
+
+def login_ok(request):
+    #email = request.POST['email'] #방법1
+    #pwd = request.POST['pwd'] #방법1
+    email = request.POST.get('email', None)
+    pwd = request.POST.get('pwd', None)
+    print("email", email, "pwd", pwd)
+    
+    try:
+        member = MEMBER.objects.get(email=email)
+    except MEMBER.DoesNotExist:
+        member = None
+    print(member)
+    
+    if member != None:
+        print("해당 email회원 존재함")
+        if member.pwd == pwd:
+            print("비밀번호 일치")
+            result = 2
+            
+            print("member.email", member.email)#방법1
+            request.session['login_ok_user'] = member.email #방법1
+            
+            #session_id = request.session.session_key #방법2
+            #print("session_id", session_id) #방법2
+            #request.session['login_ok_user'] = session_id #방법2
+        else:
+            print("비밀번호 틀림")
+            result = 1 
+    else:
+        print("해당 email회원 존재하지 않음")
+        result = 0
+    
+    template = loader.get_template('login_ok.html')
+    context = {
+        'result' : result,
+    }
+    return HttpResponse(template.render(context, request))
+
+def logout(request):
+			if request.session.get('login_ok_user'):
+				del request.session['login_ok_user']
+				#request.session.clear() # 서버측의 해당 user의 session방을 초기화
+				#request.session.flush() # 서버측의 해당 user의 session방을 삭제
+			return redirect("../")
+'''

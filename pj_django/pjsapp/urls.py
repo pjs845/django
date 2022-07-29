@@ -20,4 +20,9 @@ urlpatterns = [
     path('b_update/<int:id>', views.b_update, name='b_update'),
     path('b_update/b_update_ok/<int:id>', views.b_update_ok, name='b_update_ok'),
     path('b_delete/<int:id>', views.b_delete, name='b_delete'),
+    
+    path('login/', views.login, name='login'),
+    path('login/login_ok/', views.login_ok, name='login_ok'),
+    path('logout/', views.logout, name='logout'),
+    
 ]

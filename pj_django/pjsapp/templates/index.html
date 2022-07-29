@@ -3,4 +3,13 @@
     <h1>pjs's index.html</h1><br/>
     <a href="list">회원</a><br/>
     <a href="b_list3">게시판</a><br/>
+    <br/><br/>
+
+    <!-- login_ok_user: {{request.session.login_ok_user}} -->
+    <!-- if request.session.login_ok_user -->
+    {% if id %}
+        <a href="logout/">로그아웃</a>
+    {% else %}
+        <a href="login/">로그인</a>
+    {% endif%}
 </center>
