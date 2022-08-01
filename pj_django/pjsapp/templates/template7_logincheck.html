@@ -1,0 +1,8 @@
+{% if not request.session.login_ok_user %}
+    <script language="javascript">
+        alert("로그인을 아직 안하셨습니다, 이 링크는 회원서비스입니다.");
+        //console.log("서비스 이용 불가 at template7_logincheck.html");
+        //location.href="../";
+        history.back();
+    </script>
+{% endif %}

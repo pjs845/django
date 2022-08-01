@@ -9,7 +9,7 @@ from .models import MEMBER
 # Create your views here.
 #def index(request):
 #    return HttpResponse("<center><h3>안녕 장고</h3></center>")
-
+'''
 def index(request): 
     template = loader.get_template('index.html')
     user_id = request.session.get('login_ok_user')
@@ -27,7 +27,7 @@ def index(request):
 def index(request): #선생님코드
     template = loader.get_template('index.html')
     return HttpResponse(template.render({}, request))
-'''
+
 
 from django.db.models import Q
 import datetime
@@ -205,7 +205,7 @@ def b_delete(request, id):
     board.delete()
     return HttpResponseRedirect(reverse('b_list3'))
 
-
+'''
 def login(request):
     template = loader.get_template('login.html')
     return HttpResponse(template.render({}, request))
@@ -296,4 +296,67 @@ def logout(request):
 				#request.session.clear() # 서버측의 해당 user의 session방을 초기화
 				#request.session.flush() # 서버측의 해당 user의 session방을 삭제
 			return redirect("../")
-'''
+
+#템플릿 테스트
+def test1(request):
+    addresses = Address.objects.all().values()
+    template = loader.get_template("template1.html")
+    context = {
+        'yourname' : '길동',
+        'addresses' : addresses
+    }
+    return HttpResponse(template.render(context, request))
+    
+def test2(request):
+    template = loader.get_template('template2.html')
+    context = {
+        'x': 2,
+        'y': 'tiger',
+        'fruits': ['apple', 'orange'],
+        'fruits2': ['apple', 'orange'],
+    }
+    return HttpResponse(template.render(context, request))
+
+def test3(request):
+    addresses = Address.objects.all().values()
+    template = loader.get_template('template3.html')
+    context = {
+        'fruits': ['apple', 'orange', 'melon'],
+        'cars': [{'brand':'현대', 'model':'소나타', 'year':'2022'}, {'brand':'테슬라', 'model':'모델X', 'year':'2020'}],
+        'addresses': addresses,
+        'emptyobjs': []
+    }
+    return HttpResponse(template.render(context, request))
+
+def test4(request):
+    template = loader.get_template('template4.html')
+    context = {
+        'name': '홍길동',
+    }
+    return HttpResponse(template.render(context, request))
+
+def test5(request):
+    addresses = Address.objects.all().values()
+    template = loader.get_template('template5.html')
+    context = {
+        'addresses': addresses,
+    }
+    return HttpResponse(template.render(context, request))
+
+def test6(request):
+    addresses = Address.objects.all().values()
+    template = loader.get_template('template6.html')
+    context = {
+        'addresses': addresses,
+    }
+    return HttpResponse(template.render(context, request))
+
+def test7(request):
+    template = loader.get_template('template7.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
+
+def test8(request):
+    template = loader.get_template('template8.html')
+    context = {}
+    return HttpResponse(template.render(context, request))

@@ -1,0 +1,47 @@
+{% if x == 1%}
+    <p>one</p>
+{% elif x == 2%}
+    <p>two</p>
+{% else %}
+    <p>other</p>
+{% endif %}
+
+{% if y %}
+    <p>y는 empty가 아님</p>
+{% else %}
+    <p>y는 empty임</p>
+{% endif %}
+
+{% if x != 1 %}
+    <p>1이 아님</p>
+{% endif %}
+
+{% if x < 3 %}
+    <p>3보다 작다</p>
+{% endif %}
+
+{% if x == 2 and y == 'tiger' %}
+    <p> 2 그리고 tiger </p>
+{% endif %}
+
+{% if x == 2 and y == 'lion' or x == 3 %}
+    <p>(2 그리고 tiger) 또는 (x는 3)</p>
+{% endif %}
+
+{% if 'orange' in fruits %}
+    <p> Yes.. orange </p>
+{% else %}
+    <p> No.. orange </p>
+{% endif %}
+
+{% if fruits is fruits2 %}
+    <p> fruits is fruits2 </p>
+{% else %}
+    <p> fruits is not fruits2 </p>
+{% endif %}
+
+{% if fruits == fruits2 %}
+    <p> fruits is fruits2 </p>
+{% else %}
+    <p> fruits is not fruits2 </p>
+{% endif %}

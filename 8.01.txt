@@ -1,0 +1,126 @@
+1)템플릿 태그
+span태그 , div태그 : 영역을 나눌 때 많이 씀
+style : 폰트, 백그라운드 등등 꾸미는 용도
+a(앵커)태그 : 링크를 거는 태그
+{% with %} > html에서 직접 변수생성  ( = 사이에 띄어쓰면 오류남)
+{% for %} > html에서 for문 사용
+{% if %} html에서 if문 사용
+
+2)테스트 연산자
+<empty 체크>
+none, null, 값없음 모두 empty로 찍힘
+
+==, !=, <, <=, >, >=, and, or, in, not in, is, is not
+if안에 in, not in 만나면 반복문이 돈다
+
+<is> # 결과 > 같은 객체인지 비교
+[](배열)안에 같은 값이 있더라도 
+fruits와 fruits2는 다르다
+
+<==> # 결과 > 같은 내용인지 비교
+[](배열)안에 같은 값이 있으면 
+fruits와 fruits2는 같다
+
+
+{% for %}
+p태그 문단을 띄움
+div태그 바로밑으로 띄움
+
+{% empty %}  #address가 없으면 empty로 체킹 (존재하면 empty밑에 문장이 안나옴)
+#address가 존재하지 않아도 사용 가능
+
+(loop 변수들) # for문 안에서만 가능
+forloop.counter > 1부터 시작되는 counter
+forloop.counter0 > 0부터 시작되는 counter
+forloop.first > for루프의 첫번째
+forloop.last > for루프의 마지막
+forloop.revcounter > 거꾸로 시작되는 counter
+forloop.revcounter0 > 거꾸로 시작되는 counter(인덱스가 0까지)
+
+<comment >
+{% comment %}
+{% endcomment %}> comment ~ endcomment 사이만 주석처리
+
+{% comment "주석설명~"%}
+{% endcomment %}
+
+<p>abc{#def#}ghi</p>
+<p> 내 이름은 {#{{name}}#}</p>
+
+<cycle>
+<li style="background-color:{% cycle 'yellow' 'lightgreen' 'lightblue' %}">
+yellow > lightgreen > lightblue > yellow 순
+
+{% cycle 'yellow' 'lightgreen' 'lightblue' as bgc silent %} 
+<li style="background-color:{{bgc}}"> 
+cycle 변수화
+
+{% if forloop.counter == 2 %}
+        {% resetcycle %}
+{% endif %}
+resetcycle > 사이클 초기화 yellow > lightgreen > yellow 순
+
+
+<extends>
+template6_parents.html 부모 생성
+--html
+<body>
+    <h2>template6_parents.html</h2>
+
+    {% block subject %}
+    {% endblock %}
+    <br/>
+    {% block content %}
+    {% endblock %}
+</body>
+
+template6.html 자식 생성
+--html
+{% extends 'template6_parents.html' %}
+
+{% block subject %}
+    <h4>주소록</h4>
+{% endblock %}
+<br/>
+{% block content %}
+    addresses 에서 데이터를 뽑아서 이쁘게 구현
+    {% for address in addresses %}
+        <li>{{address.addr}}</li>
+    {% endfor %}
+{% endblock %}
+
+(부모 html과 자식 html의 block형태가 같아야함)
+
+<include>
+"template7_footer.html"
+<p> Copyright © pjsapp Corp. All rights reserved. </p>
+{% include "template7_footer.html" %}
+template7_footer.html에 있는 내용 추가
+
+"template7_top.html"
+<div> <a href="../">index</a> 
+    | <a href="../list/">address</a> 
+    | {{append_menu1}}
+    | board 
+    | {{append_menu2}} 
+</div>
+{% include "template7_top.html" with append_menu1="template" append_menu2="about" %}
+template7_top.html에 있는 내용 추가
+
+"template7_logincheck.html"
+{% if not request.session.login_ok_user %}
+    <script language="javascript">
+        alert("로그인을 아직 안하셨습니다, 이 링크는 회원서비스입니다.");
+        //console.log("서비스 이용 불가 at template7_logincheck.html");
+        //location.href="../";
+        history.back();
+    </script>
+{% endif %}
+로그인 체킹
+
+
+<filter>
+upper : 모두 대문자로 변환
+lower : 모두 소문자로 변환
+first : 첫 문장 가져옴
+linenumbers : 라인에 숫자를 넣어줌

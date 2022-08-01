@@ -1,0 +1,71 @@
+{% for x in fruits %}
+    <div> {{x}} </div>
+{% endfor %}
+
+<br/>
+
+{% for x in cars %}
+    <div> {{x.brand}} / {{x.model}} / {{x.year}}</div>
+{% endfor %}
+
+<br/>
+
+{% for address in addresses %}
+    <span style="font-weight:bold">{{address.id}}</span>
+    <div> {{address.name}} / {{address.addr}} / {{address.rdate}}</div>
+{% endfor %}
+<br/>
+
+{% for address in addresses reversed %}
+    <span style="font-weight:bold">{{address.id}}</span>
+    <div> {{address.name}} / {{address.addr}} / {{address.rdate}}</div>
+{% endfor %}
+<br/>
+
+{% for address in addresses %}
+    <span style="font-weight:bold">{{address.id}}</span>
+    <div> {{address.name}} / {{address.addr}} / {{address.rdate}}</div>
+    {% empty %}
+        No address
+{% endfor %}
+<br/>
+
+{% for x in fruits %}
+    <li>{{forloop.counter}}</li>
+{% endfor %}
+<br/>
+
+{% for x in fruits %}
+    <li>{{forloop.counter0}}</li>
+{% endfor %}
+<br/>
+
+{% for x in fruits %}
+    <li {% if forloop.first %} 
+        style='background-color:pink'
+    {% endif %}>{{x}}</li>
+        {% if forloop.first %}
+            
+        {% endif %}
+{% endfor %}
+<br/>
+
+{% for x in fruits %}
+    <li {% if forloop.last %} 
+        style='background-color:orange'
+    {% endif %}>{{x}}</li>
+        {% if forloop.first %}
+            
+        {% endif %}
+{% endfor %}
+<br/>
+
+{% for x in fruits %}
+    <li>{{forloop.revcounter}}</li>
+{% endfor %}
+<br/>
+
+{% for x in fruits %}
+    <li>{{forloop.revcounter0}}</li>
+{% endfor %}
+<br/>

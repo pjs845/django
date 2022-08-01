@@ -1,0 +1,12 @@
+{% extends 'template6_parents.html' %}
+
+{% block subject %}
+    <h4>주소록</h4>
+{% endblock %}
+<br/>
+{% block content %}
+    addresses 에서 데이터를 뽑아서 이쁘게 구현
+    {% for address in addresses %}
+        <li>{{address.addr}}</li>
+    {% endfor %}
+{% endblock %}
